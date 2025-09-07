@@ -13,7 +13,8 @@ const SECRET_KEY = 'your-secret-key'; // Change this in production!
 // Middleware
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '../public'))); // Serve static site
-app.use('/admin', express.static(path.join(__dirname, 'public'))); // Serve admin panel
+app.use('/admin', express.static(path.join(__dirname, 'public'))); // Serve admin files
+app.get('/', (req, res) => res.redirect('/admin')); // Redirect root to admin
 
 // Multer setup for image uploads
 const storage = multer.diskStorage({
