@@ -44,6 +44,8 @@ const authenticate = (req, res, next) => {
   });
 };
 
+app.get('/', (req, res) => res.redirect('/admin'));
+
 // API Routes
 // Login
 app.post('/api/login', async (req, res) => {
@@ -126,4 +128,4 @@ app.get('/:slug', (req, res) => {
   }
 });
 
-app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+app.listen(process.env.PORT || 3000, () => console.log(`Server running on http://localhost:${process.env.PORT || 3000}`));
