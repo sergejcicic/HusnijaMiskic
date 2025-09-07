@@ -1,0 +1,66 @@
+[
+    {
+      "id": 1,
+      "slug": "solski-center-novo-mesto",
+      "title": "Šolski center Novo mesto",
+      "description": "Prenova prostorov je vključevala adaptacijo učilnic, zamenjavo talnih oblog, pleskanje sten in izboljšanje izolacije. Naš cilj je bil ustvariti prijetno in funkcionalno okolje za dijake in učitelje.\n\nDela so vključevala:\nSanacijo in posodobitev garderob...\nPrenovo učilnic...",
+      "client": "Šolski center Novo mesto",
+      "date": "2020-03-01",
+      "testimonial": "Z izvedbo prenove smo izjemno zadovoljni. Podjetje Husnija Miskić s.p. je delo opravilo strokovno, kakovostno in v predvidenem časovnem okviru.",
+      "testimonialAuthor": "Dr. Matej Forjan",
+      "testimonialRole": "Direktor Šolskega centra Novo mesto",
+      "images": [
+        "/assets/img/prenove/prenova_scnm4.jpg",
+        "/assets/img/prenove/prenova_scnm3.jpg"
+      ],
+      "thumbnail": "/assets/img/scnm.jpg"
+    },
+    {
+      "id": 2,
+      "slug": "splosna-bolnisnica-novo-mesto",
+      "title": "Splošna bolnišnica Novo mesto",
+      "description": "Izvedli smo gradbena dela za posodobitev zdravstvenih prostorov, kar je vključevalo prenovo ordinacij, polaganje keramike in posodobitev sanitarij, vse z namenom zagotavljanja varnega in sodobnega zdravstvenega okolja.",
+      "client": "Splošna bolnišnica Novo mesto",
+      "date": "2021-06-15",
+      "testimonial": "",
+      "testimonialAuthor": "",
+      "testimonialRole": "",
+      "images": [
+        "/assets/img/prenove/prenova_bolnisnica1.jpg",
+        "/assets/img/prenove/prenova_bolnisnica2.jpg"
+      ],
+      "thumbnail": "/assets/img/bolnisnica.jpg"
+    },
+    {
+      "id": 3,
+      "slug": "osnovna-sola-ig",
+      "title": "Osnovna šola Ig",
+      "description": "Sodelovali smo pri prenovi šolskih prostorov, kjer smo opravili rušitvena dela, namestili nove talne obloge, prepleskali učilnice ter poskrbeli za estetsko dovršenost in funkcionalnost prostorov za učence in osebje.",
+      "client": "Osnovna šola Ig",
+      "date": "2022-08-20",
+      "testimonial": "",
+      "testimonialAuthor": "",
+      "testimonialRole": "",
+      "images": [
+        "/assets/img/prenove/prenova_ig1.jpg",
+        "/assets/img/prenove/prenova_ig2.jpg"
+      ],
+      "thumbnail": "/assets/img/osig.jpg"
+    },
+    {
+      "id": 4,
+      "slug": "scania-ljubljana",
+      "title": "Scania Ljubljana",
+      "description": "Podjetje Zidarska opravila Husnija Miskić s.p. je sodelovalo pri prenovi izbranih poslovnih prostorov podjetja Scania Ljubljana. Projekt je vključeval različna zidarska in zaključna dela, katerih cilj je bil osvežitev in funkcionalna posodobitev notranjih prostorov.",
+      "client": "Scania Ljubljana",
+      "date": "2023-04-10",
+      "testimonial": "",
+      "testimonialAuthor": "",
+      "testimonialRole": "",
+      "images": [
+        "/assets/img/prenove/prenova_scania1.jpg",
+        "/assets/img/prenove/prenova_scania2.jpg"
+      ],
+      "thumbnail": "/assets/img/scania.jpg"
+    }
+  ]
