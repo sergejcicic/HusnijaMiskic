@@ -39,6 +39,29 @@
   ======================================================== -->
 </head>
 
+<script>
+    async function loadProject() {
+      const res = await fetch('https://husnijamiskic-backend.onrender.com/api/projects');
+      const projects = await res.json();
+      const slug = window.location.pathname.slice(1); // e.g., "sbnm"
+      const project = projects.find(p => p.slug === slug || p.slug === 'splosna-bolnisnica-novo-mesto');
+      if (project) {
+        document.getElementById('project-title').innerText = project.title;
+        document.getElementById('project-description').innerText = project.description;
+        document.getElementById('project-client').innerText = project.client;
+        document.getElementById('project-date').innerText = project.date;
+        document.getElementById('project-testimonial').innerText = project.testimonial;
+        document.getElementById('project-testimonial-author').innerText = project.testimonialAuthor;
+        document.getElementById('project-testimonial-role').innerText = project.testimonialRole;
+        const gallery = document.getElementById('project-gallery');
+        gallery.innerHTML = `<div class="swiper-wrapper align-items-center">${project.images.map(img => `<div class="swiper-slide"><img src="${img}" alt="${project.title}" class="img-fluid"></div>`).join('')}</div><div class="swiper-pagination"></div>`;
+      } else {
+        document.body.innerHTML = '<h1>Project not found</h1>';
+      }
+    }
+    window.onload = loadProject;
+    </script>
+
 <body>
 
     <!-- ======= Header ======= -->
@@ -73,48 +96,46 @@
         <div class="breadcrumbs d-flex align-items-center"
             style="background-image: url('assets/img/prenove/prenova_tlakovci.jpg');">
             <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
-
-                <h2>Splošna bolnišnica Novo mesto</h2>
+    
+                <h2 id="project-title">Splošna bolnišnica Novo mesto</h2>
                 <ol>
                     <li><a href="reference.html">Reference</a></li>
                     <li>Splošna bolnišnica Novo mesto</li>
                 </ol>
-
+    
             </div>
         </div><!-- End Breadcrumbs -->
-
+    
         <!-- ======= Projet Details Section ======= -->
         <section id="project-details" class="project-details">
             <div class="container" data-aos="fade-up" data-aos-delay="100">
-
+    
                 <div class="position-relative h-100">
-                    <div class="slides-1 portfolio-details-slider swiper">
+                    <div class="slides-1 portfolio-details-slider swiper" id="project-gallery">
                         <div class="swiper-wrapper align-items-center">
-
+    
                             <div class="swiper-slide">
                                 <img src="assets/img/BOLNICA1.jpg" alt="">
                             </div>
-
+    
                             <div class="swiper-slide">
                                 <img src="assets/img/BOLNICA2.jpg" alt="">
                             </div>
-
-
-
+    
                         </div>
                         <div class="swiper-pagination"></div>
                     </div>
                     <div class="swiper-button-prev"></div>
                     <div class="swiper-button-next"></div>
-
+    
                 </div>
-
+    
                 <div class="row justify-content-between gy-4 mt-4">
-
+    
                     <div class="col-lg-8">
                         <div class="portfolio-description">
                             <h2>Prenova v Splošni bolnišnici Novo mesto</h2>
-                            <p>
+                            <p id="project-description">
                                 V podjetju Zidarska opravila Husnija Miskić s.p. smo ponosni, da smo lahko sodelovali
                                 pri pomembni prenovi prostorov v Splošni bolnišnici Novo mesto. Projekt je zajemal
                                 temeljito prenovo kopalnic, sanitarij ter nekaterih drugih funkcionalnih prostorov, pri
@@ -122,21 +143,19 @@
                             </p>
                             <p>
                                 <b>Obseg del:</b>
-                            <ul>
-                                <li>Popolna prenova kopalnic in sanitarij z zamenjavo vseh talnih in stenskih oblog</li>
-                                <li>Izvedba novih hidroizolacijskih slojev</li>
-                                <li>Zidarska in suhomontažna dela (pregradne stene, obloge)</li>
-                                <li>Priprava površin za polaganje keramike</li>
-                                <li>Zaključna dela in estetska obdelava prostorov</li>
-                            </ul>
-
-                            Pri izvedbi smo upoštevali vse tehnične in higienske standarde, ki so ključnega pomena v
-                            zdravstvenih ustanovah. Naš cilj je bil ustvariti sodobno, čisto in funkcionalno okolje,
-                            ki bo pacientom in zaposlenim omogočalo boljše pogoje bivanja in dela.
+                                <ul>
+                                    <li>Popolna prenova kopalnic in sanitarij z zamenjavo vseh talnih in stenskih oblog</li>
+                                    <li>Izvedba novih hidroizolacijskih slojev</li>
+                                    <li>Zidarska in suhomontažna dela (pregradne stene, obloge)</li>
+                                    <li>Priprava površin za polaganje keramike</li>
+                                    <li>Zaključna dela in estetska obdelava prostorov</li>
+                                </ul>
+                                Pri izvedbi smo upoštevali vse tehnične in higienske standarde, ki so ključnega pomena v
+                                zdravstvenih ustanovah. Naš cilj je bil ustvariti sodobno, čisto in funkcionalno okolje,
+                                ki bo pacientom in zaposlenim omogočalo boljše pogoje bivanja in dela.
                             </p>
-
-                            <div class="testimonial-item">
-                                <p>
+                            <div class="testimonial-item" id="project-testimonial-container">
+                                <p id="project-testimonial">
                                     <i class="bi bi-quote quote-icon-left"></i>
                                     Z izvedbo gradbenih del v sklopu prenove sanitarij, kopalnic in dodatnih prostorov v
                                     naši ustanovi smo bili izjemno zadovoljni. Podjetje Zidarska opravila Husnija Miskić
@@ -145,34 +164,24 @@
                                 </p>
                                 <div>
                                     <img src="assets/img/testimonials/milena-kramar.jpg" class="testimonial-img" alt="">
-                                    <h3>dr. Milena Kramar Zupan.</h3>
-                                    <h4>Direktorica Splošne bolnišnice Novo mesto</h4>
+                                    <h3 id="project-testimonial-author">dr. Milena Kramar Zupan.</h3>
+                                    <h4 id="project-testimonial-role">Direktorica Splošne bolnišnice Novo mesto</h4>
                                 </div>
                             </div>
-
-                            <p>
-
-
-
-
+                            <p></p>
                         </div>
                     </div>
                     <div class="col-lg-3">
                         <div class="portfolio-info">
                             <h3>Informacije</h3>
                             <ul>
-
-                                <li><strong>Klient</strong> <span>Splošna bolnišnica Novo mesto</span></li>
-                                <li><strong>Datum</strong> <span>01 April, 2025</span></li>
+                                <li><strong>Klient</strong> <span id="project-client">Splošna bolnišnica Novo mesto</span></li>
+                                <li><strong>Datum</strong> <span id="project-date">01 April, 2025</span></li>
                             </ul>
                         </div>
-
-
                     </div>
-
                 </div>
-        </section><!-- End Projet Details Section -->
-
+            </section><!-- End Projet Details Section -->
     </main><!-- End #main -->
 
 

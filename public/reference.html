@@ -141,7 +141,7 @@
 
 <script>
 async function loadReferences() {
-  const res = await fetch('/api/projects');
+  const res = await fetch('https://husnijamiskic-backend.onrender.com/api/projects');
   const projects = await res.json();
   const container = document.getElementById('references');
   container.innerHTML = projects.map(project => `

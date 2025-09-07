@@ -213,88 +213,115 @@
             številnih prenovah stanovanj, gradnjah poslovnih prostorov, izdelavi fasad in drugih gradbenih delih.</p>
         </div>
 
-        <div class="row gy-4">
+        <div class="row gy-4" id="references"></div>
 
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-            <div class="card-item">
-              <div class="row">
-                <div class="col-xl-5">
-                  <div class="card-bg" style="background-image: url(assets/img/scnm.jpg);"></div>
-                </div>
-                <div class="col-xl-7 d-flex align-items-center">
-                  <div class="card-body">
-                    <h4 class="card-title">Šolski center Novo mesto</h4>
-                    <p>Prenova prostorov je vključevala adaptacijo učilnic, zamenjavo talnih oblog, pleskanje sten in
-                      izboljšanje izolacije. Naš cilj je bil ustvariti prijetno in funkcionalno okolje za dijake in
-                      učitelje.</p> <br>
-                    <a href="scnm.html" class="readmore stretched-link">Več o projektu <i
-                        class="bi bi-arrow-right"></i></a>
+        <script>
+        async function loadReferences() {
+          const res = await fetch('https://husnijamiskic-backend.onrender.com/api/projects');
+          const projects = await res.json();
+          const container = document.getElementById('references');
+          container.innerHTML = projects.map(project => `
+            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+              <div class="card-item">
+                <div class="row">
+                  <div class="col-xl-5">
+                    <div class="card-bg" style="background-image: url(${project.thumbnail});"></div>
+                  </div>
+                  <div class="col-xl-7 d-flex align-items-center">
+                    <div class="card-body">
+                      <h4 class="card-title">${project.title}</h4>
+                      <p>${project.description}</p><br>
+                      <a href="/${project.slug}" class="readmore stretched-link">Learn more <i class="bi bi-arrow-right"></i></a>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div><!-- End Card Item -->
+          `).join('');
+        }
+        window.onload = loadReferences;
+        </script><!-- End Card Item -->
 
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
-            <div class="card-item">
-              <div class="row">
-                <div class="col-xl-5">
-                  <div class="card-bg" style="background-image: url(assets/img/projects/urgentni-center-uc-25.webp);">
-                  </div>
-                </div>
-                <div class="col-xl-7 d-flex align-items-center">
-                  <div class="card-body">
-                    <h4 class="card-title">Splošna bolnišnica Novo mesto</h4>
-                    <p> Izvedli smo gradbena dela za posodobitev zdravstvenih prostorov, kar je vključevalo prenovo
-                      ordinacij, polaganje keramike in posodobitev sanitarij, vse z namenom zagotavljanja varnega in
-                      sodobnega zdravstvenega okolja.</p> <br>
-                    <a href="sbnm.html" class="readmore stretched-link">Več o projektu <i
-                        class="bi bi-arrow-right"></i></a>
-                  </div>
-                </div>
+<script>
+  async function loadReferences() {
+    const res = await fetch('https://husnijamiskic-backend.onrender.com/api/projects');
+    const projects = await res.json();
+    const container = document.getElementById('references');
+    container.innerHTML = projects.map(project => `
+      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+        <div class="card-item">
+          <div class="row">
+            <div class="col-xl-5">
+              <div class="card-bg" style="background-image: url(${project.thumbnail});"></div>
+            </div>
+            <div class="col-xl-7 d-flex align-items-center">
+              <div class="card-body">
+                <h4 class="card-title">${project.title}</h4>
+                <p>${project.description}</p><br>
+                <a href="/${project.slug}" class="readmore stretched-link">Learn more <i class="bi bi-arrow-right"></i></a>
               </div>
             </div>
-          </div><!-- End Card Item -->
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+  window.onload = loadReferences;
+  </script><!-- End Card Item -->
 
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="300">
-            <div class="card-item">
-              <div class="row">
-                <div class="col-xl-5">
-                  <div class="card-bg" style="background-image: url(assets/img/osig3.JPG);"></div>
-                </div>
-                <div class="col-xl-7 d-flex align-items-center">
-                  <div class="card-body">
-                    <h4 class="card-title">Osnovna šola Ig</h4>
-                    <p>Sodelovali smo pri prenovi šolskih prostorov, kjer smo opravili rušitvena dela, namestili nove
-                      talne obloge, prepleskali učilnice ter poskrbeli za estetsko dovršenost in funkcionalnost
-                      prostorov za učence in osebje.</p> <br>
-                    <a href="Osnovna-sola.html" class="readmore stretched-link">Več o projektu <i
-                        class="bi bi-arrow-right"></i></a>
-                  </div>
-                </div>
+<script>
+  async function loadReferences() {
+    const res = await fetch('https://husnijamiskic-backend.onrender.com/api/projects');
+    const projects = await res.json();
+    const container = document.getElementById('references');
+    container.innerHTML = projects.map(project => `
+      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+        <div class="card-item">
+          <div class="row">
+            <div class="col-xl-5">
+              <div class="card-bg" style="background-image: url(${project.thumbnail});"></div>
+            </div>
+            <div class="col-xl-7 d-flex align-items-center">
+              <div class="card-body">
+                <h4 class="card-title">${project.title}</h4>
+                <p>${project.description}</p><br>
+                <a href="/${project.slug}" class="readmore stretched-link">Learn more <i class="bi bi-arrow-right"></i></a>
               </div>
             </div>
-          </div><!-- End Card Item -->
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+  window.onload = loadReferences;
+  </script><!-- End Card Item -->
 
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="400">
-            <div class="card-item">
-              <div class="row">
-                <div class="col-xl-5">
-                  <div class="card-bg" style="background-image: url(assets/img/scania-hybrid-g-360-13.jpg);"></div>
-                </div>
-                <div class="col-xl-7 d-flex align-items-center">
-                  <div class="card-body">
-                    <h4 class="card-title">Scania Ljubljana</h4>
-                    <p>Podjetje Zidarska opravila Husnija Miskić s.p. je sodelovalo pri prenovi izbranih poslovnih
-                      prostorov podjetja Scania Ljubljana. Projekt je vključeval različna zidarska in zaključna dela,
-                      katerih cilj je bil osvežitev in funkcionalna posodobitev notranjih prostorov..</p> <br>
-                    <a href="scania.html" class="readmore stretched-link">Več o projektu <i
-                        class="bi bi-arrow-right"></i></a>
-                  </div>
-                </div>
+<script>
+  async function loadReferences() {
+    const res = await fetch('https://husnijamiskic-backend.onrender.com/api/projects');
+    const projects = await res.json();
+    const container = document.getElementById('references');
+    container.innerHTML = projects.map(project => `
+      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+        <div class="card-item">
+          <div class="row">
+            <div class="col-xl-5">
+              <div class="card-bg" style="background-image: url(${project.thumbnail});"></div>
+            </div>
+            <div class="col-xl-7 d-flex align-items-center">
+              <div class="card-body">
+                <h4 class="card-title">${project.title}</h4>
+                <p>${project.description}</p><br>
+                <a href="/${project.slug}" class="readmore stretched-link">Learn more <i class="bi bi-arrow-right"></i></a>
               </div>
             </div>
-          </div><!-- End Card Item -->
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+  window.onload = loadReferences;
+  </script><!-- End Card Item -->
 
         </div>
 

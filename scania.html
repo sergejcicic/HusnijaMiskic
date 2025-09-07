@@ -39,6 +39,29 @@
   ======================================================== -->
 </head>
 
+<script>
+    async function loadProject() {
+      const res = await fetch('https://husnijamiskic-backend.onrender.com/api/projects');
+      const projects = await res.json();
+      const slug = window.location.pathname.slice(1); // e.g., "scania"
+      const project = projects.find(p => p.slug === slug || p.slug === 'scania-ljubljana');
+      if (project) {
+        document.getElementById('project-title').innerText = project.title;
+        document.getElementById('project-description').innerText = project.description;
+        document.getElementById('project-client').innerText = project.client;
+        document.getElementById('project-date').innerText = project.date;
+        document.getElementById('project-testimonial').innerText = project.testimonial;
+        document.getElementById('project-testimonial-author').innerText = project.testimonialAuthor;
+        document.getElementById('project-testimonial-role').innerText = project.testimonialRole;
+        const gallery = document.getElementById('project-gallery');
+        gallery.innerHTML = `<div class="swiper-wrapper align-items-center">${project.images.map(img => `<div class="swiper-slide"><img src="${img}" alt="${project.title}" class="img-fluid"></div>`).join('')}</div><div class="swiper-pagination"></div>`;
+      } else {
+        document.body.innerHTML = '<h1>Project not found</h1>';
+      }
+    }
+    window.onload = loadProject;
+    </script>
+
 <body>
 
     <!-- ======= Header ======= -->
@@ -73,48 +96,46 @@
         <div class="breadcrumbs d-flex align-items-center"
             style="background-image: url('assets/img/prenove/prenova_tlakovci.jpg');">
             <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
-
-                <h2>Scania Ljubljana</h2>
+    
+                <h2 id="project-title">Scania Ljubljana</h2>
                 <ol>
                     <li><a href="reference.html">Reference</a></li>
                     <li>Scania Ljubljana</li>
                 </ol>
-
+    
             </div>
         </div><!-- End Breadcrumbs -->
-
+    
         <!-- ======= Projet Details Section ======= -->
         <section id="project-details" class="project-details">
             <div class="container" data-aos="fade-up" data-aos-delay="100">
-
+    
                 <div class="position-relative h-100">
-                    <div class="slides-1 portfolio-details-slider swiper">
+                    <div class="slides-1 portfolio-details-slider swiper" id="project-gallery">
                         <div class="swiper-wrapper align-items-center">
-
+    
                             <div class="swiper-slide">
                                 <img src="assets/img/scania1.jpg" alt="">
                             </div>
-
+    
                             <div class="swiper-slide">
                                 <img src="assets/img/scania2.jpg" alt="">
                             </div>
-
-
-
+    
                         </div>
                         <div class="swiper-pagination"></div>
                     </div>
                     <div class="swiper-button-prev"></div>
                     <div class="swiper-button-next"></div>
-
+    
                 </div>
-
+    
                 <div class="row justify-content-between gy-4 mt-4">
-
+    
                     <div class="col-lg-8">
                         <div class="portfolio-description">
                             <h2>Prenova prostorov v podjetju Scania Ljubljana</h2>
-                            <p>
+                            <p id="project-description">
                                 Podjetje Zidarska opravila Husnija Miskić s.p. je sodelovalo pri prenovi izbranih
                                 notranjih prostorov podjetja Scania Ljubljana. Projekt je bil usmerjen v izboljšanje
                                 funkcionalnosti in videza poslovnih prostorov, ki dnevno sprejemajo tako zaposlene kot
@@ -130,15 +151,14 @@
                                 <li>Usklajevanje del z ostalimi izvajalci ter sprotno prilagajanje zahtevam naročnika
                                 </li>
                             </ul>
-
+    
                             Glavni poudarek je bil na prenovi hodnikov, poslovnih prostorov ter sanitarij, kjer smo
                             izvedli natančna zaključna dela in poskrbeli za visoko kakovost izvedbe. Vsa dela so bila
                             opravljena skrbno, v dogovorjenih rokih in ob minimalnem motenju vsakodnevnega delovanja
                             podjetja.
                             </p>
-
-                            <div class="testimonial-item">
-                                <p>
+                            <div class="testimonial-item" id="project-testimonial-container">
+                                <p id="project-testimonial">
                                     <i class="bi bi-quote quote-icon-left"></i>
                                     Z izvedbo prenove v prostorih našega podjetja smo bili zelo zadovoljni. Podjetje
                                     Zidarska opravila Husnija Miskić s.p. je izkazalo izjemno strokovnost, natančnost in
@@ -149,34 +169,24 @@
                                 <div>
                                     <img src="assets/img/testimonials/blank-profile-picture-973460_960_720.webp"
                                         class="testimonial-img" alt="">
-                                    <h3>Urška Satler</h3>
-                                    <h4>Direktorica</h4>
+                                    <h3 id="project-testimonial-author">Urška Satler</h3>
+                                    <h4 id="project-testimonial-role">Direktorica</h4>
                                 </div>
                             </div>
-
-                            <p>
-
-
-
-
+                            <p></p>
                         </div>
                     </div>
                     <div class="col-lg-3">
                         <div class="portfolio-info">
                             <h3>Informacije</h3>
                             <ul>
-
-                                <li><strong>Klient</strong> <span>SCANIA SLOVENIJA d.o.o.</span></li>
-                                <li><strong>Datum</strong> <span>01 April, 2023</span></li>
+                                <li><strong>Klient</strong> <span id="project-client">SCANIA SLOVENIJA d.o.o.</span></li>
+                                <li><strong>Datum</strong> <span id="project-date">01 April, 2023</span></li>
                             </ul>
                         </div>
-
-
                     </div>
-
                 </div>
-        </section><!-- End Projet Details Section -->
-
+            </section><!-- End Projet Details Section -->
     </main><!-- End #main -->
 
 

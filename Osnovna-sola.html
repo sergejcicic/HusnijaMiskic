@@ -39,6 +39,29 @@
   ======================================================== -->
 </head>
 
+<script>
+  async function loadProject() {
+    const res = await fetch('https://husnijamiskic-backend.onrender.com/api/projects');
+    const projects = await res.json();
+    const slug = window.location.pathname.slice(1); // e.g., "osnovna-sola-ig"
+    const project = projects.find(p => p.slug === slug || p.slug === 'osnovna-sola-ig');
+    if (project) {
+      document.getElementById('project-title').innerText = project.title;
+      document.getElementById('project-description').innerText = project.description;
+      document.getElementById('project-client').innerText = project.client;
+      document.getElementById('project-date').innerText = project.date;
+      document.getElementById('project-testimonial').innerText = project.testimonial;
+      document.getElementById('project-testimonial-author').innerText = project.testimonialAuthor;
+      document.getElementById('project-testimonial-role').innerText = project.testimonialRole;
+      const gallery = document.getElementById('project-gallery');
+      gallery.innerHTML = `<div class="swiper-wrapper align-items-center">${project.images.map(img => `<div class="swiper-slide"><img src="${img}" alt="${project.title}" class="img-fluid"></div>`).join('')}</div><div class="swiper-pagination"></div>`;
+    } else {
+      document.body.innerHTML = '<h1>Project not found</h1>';
+    }
+  }
+  window.onload = loadProject;
+  </script>
+
 <body>
 
   <!-- ======= Header ======= -->
@@ -74,7 +97,7 @@
       style="background-image: url('assets/img/prenove/prenova_tlakovci.jpg');">
       <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
 
-        <h2>Osnovna šola Ig</h2>
+        <h2 id="project-title">Osnovna šola Ig</h2>
         <ol>
           <li><a href="reference.html">Reference</a></li>
           <li>Osnovna šola Ig</li>
@@ -88,7 +111,7 @@
       <div class="container" data-aos="fade-up" data-aos-delay="100">
 
         <div class="position-relative h-100">
-          <div class="slides-1 portfolio-details-slider swiper">
+          <div class="slides-1 portfolio-details-slider swiper" id="project-gallery">
             <div class="swiper-wrapper align-items-center">
 
               <div class="swiper-slide">
@@ -98,8 +121,6 @@
               <div class="swiper-slide">
                 <img src="assets/img/osig2.jpg" alt="">
               </div>
-
-
 
             </div>
             <div class="swiper-pagination"></div>
@@ -114,7 +135,7 @@
           <div class="col-lg-8">
             <div class="portfolio-description">
               <h2>Prenova v Osnovni šoli Ig</h2>
-              <p>
+              <p id="project-description">
                 V podjetju Zidarska opravila Husnija Miskić s.p. smo sodelovali pri prenovi določenih ključnih delov
                 Osnovne šole Ig. Projekt je vključeval prenovo kurilnice in stopnišča, pri čemer smo poskrbeli za varno,
                 funkcionalno in kakovostno izvedbo vseh del.
@@ -133,9 +154,8 @@
               Poseben poudarek je bil na varnosti, trajnosti materialov in funkcionalnosti, saj gre za prostore, ki so
               vsakodnevno v uporabi in morajo prenesti visoke obremenitve.
               </p>
-
-              <div class="testimonial-item">
-                <p>
+              <div class="testimonial-item" id="project-testimonial-container">
+                <p id="project-testimonial">
                   <i class="bi bi-quote quote-icon-left"></i>
                   Prenova kurilnice in šolskega stopnišča je bila za našo šolo pomemben projekt, saj gre za prostore, ki
                   igrajo ključno vlogo pri vsakodnevnem delovanju in varnosti objekta. Podjetje Zidarska opravila
@@ -145,35 +165,25 @@
                 <div>
                   <img src="assets/img/testimonials/blank-profile-picture-973460_960_720.webp" class="testimonial-img"
                     alt="">
-                  <h3>mag. Karmen Zorko</h3>
-                  <h4>Ravnateljica</h4>
+                  <h3 id="project-testimonial-author">mag. Karmen Zorko</h3>
+                  <h4 id="project-testimonial-role">Ravnateljica</h4>
                 </div>
               </div>
-
-              <p>
-
-
-
-
+              <p></p>
             </div>
           </div>
           <div class="col-lg-3">
             <div class="portfolio-info">
               <h3>Informacije</h3>
               <ul>
-
-                <li><strong>Klient</strong> <span>Osnovna šola Ig</span></li>
-                <li><strong>Datum</strong> <span>01 April, 2022</span></li>
+                <li><strong>Klient</strong> <span id="project-client">Osnovna šola Ig</span></li>
+                <li><strong>Datum</strong> <span id="project-date">01 April, 2022</span></li>
               </ul>
             </div>
-
-
           </div>
-
         </div>
     </section><!-- End Projet Details Section -->
-
-  </main><!-- End #main -->
+</main><!-- End #main -->
 
 
   <!-- ======= Footer ======= -->

@@ -30,6 +30,29 @@
   <link href="/assets/css/main.css" rel="stylesheet">
 </head>
 
+<script>
+  async function loadProject() {
+    const res = await fetch('https://husnijamiskic-backend.onrender.com/api/projects');
+    const projects = await res.json();
+    const slug = window.location.pathname.slice(1); // e.g., "scnm"
+    const project = projects.find(p => p.slug === slug || p.slug === 'solski-center-novo-mesto');
+    if (project) {
+      document.getElementById('project-title').innerText = project.title;
+      document.getElementById('project-description').innerText = project.description;
+      document.getElementById('project-client').innerText = project.client;
+      document.getElementById('project-date').innerText = project.date;
+      document.getElementById('project-testimonial').innerText = project.testimonial;
+      document.getElementById('project-testimonial-author').innerText = project.testimonialAuthor;
+      document.getElementById('project-testimonial-role').innerText = project.testimonialRole;
+      const gallery = document.getElementById('project-gallery');
+      gallery.innerHTML = `<div class="swiper-wrapper align-items-center">${project.images.map(img => `<div class="swiper-slide"><img src="${img}" alt="${project.title}" class="img-fluid"></div>`).join('')}</div><div class="swiper-pagination"></div>`;
+    } else {
+      document.body.innerHTML = '<h1>Project not found</h1>';
+    }
+  }
+  window.onload = loadProject;
+  </script>
+
 <body>
   <!-- ======= Header ======= -->
   <header id="header" class="header d-flex align-items-center">
@@ -52,46 +75,98 @@
   </header><!-- End Header -->
 
   <main id="main">
+
     <!-- ======= Breadcrumbs ======= -->
-    <div class="breadcrumbs d-flex align-items-center" id="breadcrumbs-bg">
+    <div class="breadcrumbs d-flex align-items-center"
+      style="background-image: url('assets/img/prenove/prenova_tlakovci.jpg');">
       <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
-        <h2 id="project-title"></h2>
+
+        <h2 id="project-title">Šolski center Novo mesto</h2>
         <ol>
-          <li><a href="/reference.html">Reference</a></li>
-          <li id="project-title-breadcrumb"></li>
+          <li><a href="index.html">Domov</a></li>
+          <li>Šolski center Novo mesto</li>
         </ol>
+
       </div>
     </div><!-- End Breadcrumbs -->
 
-    <!-- ======= Project Details Section ======= -->
+    <!-- ======= Projet Details Section ======= -->
     <section id="project-details" class="project-details">
       <div class="container" data-aos="fade-up" data-aos-delay="100">
+
         <div class="position-relative h-100">
-          <div class="slides-1 portfolio-details-slider swiper">
-            <div class="swiper-wrapper align-items-center" id="project-images"></div>
+          <div class="slides-1 portfolio-details-slider swiper" id="project-gallery">
+            <div class="swiper-wrapper align-items-center">
+
+              <div class="swiper-slide">
+                <img src="assets/img/prenove/prenova_scnm4.jpg" alt="">
+              </div>
+
+              <div class="swiper-slide">
+                <img src="assets/img/prenove/prenova_scnm3.jpg" alt="">
+              </div>
+
+            </div>
             <div class="swiper-pagination"></div>
           </div>
           <div class="swiper-button-prev"></div>
           <div class="swiper-button-next"></div>
+
         </div>
+
         <div class="row justify-content-between gy-4 mt-4">
+
           <div class="col-lg-8">
             <div class="portfolio-description">
-              <h2 id="project-title-description"></h2>
-              <p id="project-description"></p>
-              <div class="testimonial-item" id="project-testimonial"></div>
+              <h2>Sodobne garderobe in prenovljene učilnice</h2>
+              <p id="project-description">
+                Podjetje Zidarska opravila Husnija Miskić s.p. je z uspešno izvedeno prenovo pomembno prispevalo k
+                izboljšanju pogojev za delo in učenje v Šolskem centru. V sklopu projekta so bile temeljito prenovljene
+                garderobe ter učilnice, ki sedaj odražajo sodoben pristop k urejenemu in funkcionalnemu šolskemu
+                prostoru.
+              </p>
+              <p>
+                Dela so vključevala:
+
+                Sanacijo in posodobitev garderob, kjer so bili obnovljeni zidovi, zamenjana tla ter urejeni vsi ključni
+                instalacijski elementi, kar omogoča prijetnejše in bolj higiensko okolje za dijake.
+
+                Prenovo učilnic, pri kateri so bile izvedene zidarske sanacije, izboljšana toplotna in zvočna izolacija
+                ter priprava prostorov za nadaljnjo tehnično opremo in notranjo ureditev.
+              </p>
+              <div class="testimonial-item" id="project-testimonial-container">
+                <p id="project-testimonial">
+                  <i class="bi bi-quote quote-icon-left"></i>
+                  Z izvedbo prenove smo izjemno zadovoljni. Podjetje Husnija Miskić s.p. je delo opravilo strokovno,
+                  kakovostno in v predvidenem časovnem okviru. Prenovljene garderobe in učilnice predstavljajo velik
+                  korak naprej k boljšim pogojem za dijake in zaposlene.
+                  <i class="bi bi-quote quote-icon-right"></i>
+                </p>
+                <div>
+                  <img src="assets/img/testimonials/Dr. Matej Forjan.jpg" class="testimonial-img" alt="">
+                  <h3 id="project-testimonial-author">Dr. Matej Forjan</h3>
+                  <h4 id="project-testimonial-role">Direktor Šolskega centra Novo mesto</h4>
+                </div>
+              </div>
+              <p>
+                Projekt je bil izveden v dogovorjenih rokih in v skladu z najvišjimi standardi kakovosti. Z izkušnjami,
+                zanesljivostjo in natančnostjo je podjetje Husnija Miskić s.p. znova dokazalo, da je zaupanja vreden
+                partner pri izvedbi gradbenih projektov v izobraževalnih ustanovah.
+              </p>
             </div>
           </div>
           <div class="col-lg-3">
             <div class="portfolio-info">
               <h3>Informacije</h3>
-              <ul id="project-info"></ul>
+              <ul>
+                <li><strong>Klient</strong> <span id="project-client">Šolski center Novo mesto</span></li>
+                <li><strong>Datum</strong> <span id="project-date">01 March, 2020</span></li>
+              </ul>
             </div>
           </div>
         </div>
-      </div>
-    </section><!-- End Project Details Section -->
-  </main><!-- End #main -->
+    </section><!-- End Projet Details Section -->
+</main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
