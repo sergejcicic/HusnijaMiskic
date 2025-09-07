@@ -24,9 +24,13 @@ const upload = multer({ storage });
 
 // Load projects from JSON
 const getProjects = () => {
-  const data = fs.readFileSync(path.join(__dirname, 'data/projects.json'));
-  return JSON.parse(data);
-};
+    const filePath = path.join(__dirname, 'data/projects.json');
+    if (!fs.existsSync(filePath)) {
+      fs.writeFileSync(filePath, JSON.stringify([], null, 2));
+    }
+    const data = fs.readFileSync(filePath);
+    return JSON.parse(data);
+  };
 
 // Save projects to JSON
 const saveProjects = (projects) => {
