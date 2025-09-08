@@ -26,10 +26,10 @@
       "testimonialAuthor": "",
       "testimonialRole": "",
       "images": [
-        "/assets/img/prenove/prenova_bolnisnica1.jpg",
-        "/assets/img/prenove/prenova_bolnisnica2.jpg"
+        "/assets/img/BOLNICA1.jpg",
+        "/assets/img/BOLNICA2.jpg"
       ],
-      "thumbnail": "/assets/img/bolnisnica.jpg"
+      "thumbnail": "/assets/img/urgentnicenter.jpeg"
     },
     {
       "id": 3,
@@ -42,10 +42,10 @@
       "testimonialAuthor": "",
       "testimonialRole": "",
       "images": [
-        "/assets/img/prenove/prenova_ig1.jpg",
-        "/assets/img/prenove/prenova_ig2.jpg"
+        "/assets/img/osig1.jpg",
+        "/assets/img/osig2.jpg"
       ],
-      "thumbnail": "/assets/img/osig.jpg"
+      "thumbnail": "/assets/img/OS_IG.jpg"
     },
     {
       "id": 4,
@@ -58,9 +58,9 @@
       "testimonialAuthor": "",
       "testimonialRole": "",
       "images": [
-        "/assets/img/prenove/prenova_scania1.jpg",
-        "/assets/img/prenove/prenova_scania2.jpg"
+        "/assets/img/scania1.jpg",
+        "/assets/img/scania2.jpg"
       ],
-      "thumbnail": "/assets/img/scania.jpg"
+      "thumbnail": "/assets/img/scania-hybrid-g-360-13.jpg"
     }
   ]
