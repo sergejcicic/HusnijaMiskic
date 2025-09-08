@@ -10,6 +10,14 @@ const app = express();
 const PORT = 3000;
 const SECRET_KEY = 'your-secret-key'; // Change this in production!
 
+//CORS middleware 
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'https://sergejc.iti.si');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+});
+
 // Middleware
 app.use(bodyParser.json());
 app.use('/admin', express.static(path.join(__dirname, 'public'))); // Serve admin files from backend/public/
