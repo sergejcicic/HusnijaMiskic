@@ -35,10 +35,16 @@ const upload = multer({ storage });
 const getProjects = () => {
     const filePath = path.join(__dirname, 'data/projects.json');
     if (!fs.existsSync(filePath)) {
+      console.error('projects.json does not exist at:', filePath);
       fs.writeFileSync(filePath, JSON.stringify([], null, 2));
     }
-    const data = fs.readFileSync(filePath);
-    return JSON.parse(data);
+    try {
+      const data = fs.readFileSync(filePath);
+      return JSON.parse(data);
+    } catch (error) {
+      console.error('Error reading projects.json:', error.message);
+      return [];
+    }
   };
 
 // Save projects to JSON

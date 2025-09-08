@@ -216,112 +216,42 @@
         <div class="row gy-4" id="references"></div>
 
         <script>
-        async function loadReferences() {
-          const res = await fetch('https://husnijamiskic-backend.onrender.com/api/projects');
-          const projects = await res.json();
-          const container = document.getElementById('references');
-          container.innerHTML = projects.map(project => `
-            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-              <div class="card-item">
-                <div class="row">
-                  <div class="col-xl-5">
-                    <div class="card-bg" style="background-image: url(${project.thumbnail});"></div>
-                  </div>
-                  <div class="col-xl-7 d-flex align-items-center">
-                    <div class="card-body">
-                      <h4 class="card-title">${project.title}</h4>
-                      <p>${project.description}</p><br>
-                      <a href="/${project.slug}" class="readmore stretched-link">Learn more <i class="bi bi-arrow-right"></i></a>
+          async function loadReferences() {
+            try {
+              const res = await fetch('https://husnijamiskic-backend.onrender.com/api/projects');
+              const projects = await res.json();
+              console.log('Projects:', projects); // Debug: Check the data in console
+              const container = document.getElementById('references');
+              if (projects.length > 0) {
+                container.innerHTML = projects.map(project => `
+                  <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card-item">
+                      <div class="row">
+                        <div class="col-xl-5">
+                          <div class="card-bg" style="background-image: url(${project.thumbnail});"></div>
+                        </div>
+                        <div class="col-xl-7 d-flex align-items-center">
+                          <div class="card-body">
+                            <h4 class="card-title">${project.title}</h4>
+                            <p>${project.description || 'No description available'}</p><br>
+                            <a href="/${project.slug}" class="readmore stretched-link">Learn more <i class="bi bi-arrow-right"></i></a>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            </div>
-          `).join('');
-        }
-        window.onload = loadReferences;
-        </script><!-- End Card Item -->
-
-<script>
-  async function loadReferences() {
-    const res = await fetch('https://husnijamiskic-backend.onrender.com/api/projects');
-    const projects = await res.json();
-    const container = document.getElementById('references');
-    container.innerHTML = projects.map(project => `
-      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-        <div class="card-item">
-          <div class="row">
-            <div class="col-xl-5">
-              <div class="card-bg" style="background-image: url(${project.thumbnail});"></div>
-            </div>
-            <div class="col-xl-7 d-flex align-items-center">
-              <div class="card-body">
-                <h4 class="card-title">${project.title}</h4>
-                <p>${project.description}</p><br>
-                <a href="/${project.slug}" class="readmore stretched-link">Learn more <i class="bi bi-arrow-right"></i></a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    `).join('');
-  }
-  window.onload = loadReferences;
-  </script><!-- End Card Item -->
-
-<script>
-  async function loadReferences() {
-    const res = await fetch('https://husnijamiskic-backend.onrender.com/api/projects');
-    const projects = await res.json();
-    const container = document.getElementById('references');
-    container.innerHTML = projects.map(project => `
-      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-        <div class="card-item">
-          <div class="row">
-            <div class="col-xl-5">
-              <div class="card-bg" style="background-image: url(${project.thumbnail});"></div>
-            </div>
-            <div class="col-xl-7 d-flex align-items-center">
-              <div class="card-body">
-                <h4 class="card-title">${project.title}</h4>
-                <p>${project.description}</p><br>
-                <a href="/${project.slug}" class="readmore stretched-link">Learn more <i class="bi bi-arrow-right"></i></a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    `).join('');
-  }
-  window.onload = loadReferences;
-  </script><!-- End Card Item -->
-
-<script>
-  async function loadReferences() {
-    const res = await fetch('https://husnijamiskic-backend.onrender.com/api/projects');
-    const projects = await res.json();
-    const container = document.getElementById('references');
-    container.innerHTML = projects.map(project => `
-      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-        <div class="card-item">
-          <div class="row">
-            <div class="col-xl-5">
-              <div class="card-bg" style="background-image: url(${project.thumbnail});"></div>
-            </div>
-            <div class="col-xl-7 d-flex align-items-center">
-              <div class="card-body">
-                <h4 class="card-title">${project.title}</h4>
-                <p>${project.description}</p><br>
-                <a href="/${project.slug}" class="readmore stretched-link">Learn more <i class="bi bi-arrow-right"></i></a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    `).join('');
-  }
-  window.onload = loadReferences;
-  </script><!-- End Card Item -->
+                `).join('');
+              } else {
+                container.innerHTML = '<p>No projects available.</p>';
+              }
+            } catch (error) {
+              console.error('Error loading references:', error);
+              const container = document.getElementById('references');
+              container.innerHTML = '<p>Error loading projects. Check console for details.</p>';
+            }
+          }
+          window.onload = loadReferences;
+          </script><!-- End Card Item -->
 
         </div>
 
