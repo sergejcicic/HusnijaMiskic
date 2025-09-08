@@ -26,10 +26,10 @@ app.get('/admin', (req, res) => res.sendFile(path.join(__dirname, 'public/admin.
 
 // Multer setup for image uploads
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, '../public/assets/img/prenove/'),
-  filename: (req, file, cb) => cb(null, Date.now() + '-' + file.originalname),
-});
-const upload = multer({ storage });
+    destination: (req, file, cb) => cb(null, path.join(__dirname, 'public/assets/img/')),
+    filename: (req, file, cb) => cb(null, Date.now() + '-' + file.originalname),
+  });
+  const upload = multer({ storage });
 
 // Load projects from JSON
 const getProjects = () => {
