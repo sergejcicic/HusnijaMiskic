@@ -86,26 +86,26 @@ app.get('/api/projects', (req, res) => {
 
 // Add a project
 app.post('/api/projects', authenticate, upload.array('images', 5), (req, res) => {
-  const projects = getProjects();
-  const { title, description, client, date, testimonial, testimonialAuthor, testimonialRole } = req.body;
-  const images = req.files.map(file => `/assets/img/prenove/${file.filename}`);
-  const newProject = {
-    id: projects.length + 1,
-    slug: title.toLowerCase().replace(/ /g, '-'), // e.g., "solski-center-novo-mesto"
-    title,
-    description,
-    client,
-    date,
-    testimonial,
-    testimonialAuthor,
-    testimonialRole,
-    images,
-    thumbnail: images[0] || '/assets/img/default.jpg',
-  };
-  projects.push(newProject);
-  saveProjects(projects);
-  res.json(newProject);
-});
+    const projects = getProjects();
+    const { title, description, client, date, testimonial, testimonialAuthor, testimonialRole } = req.body;
+    const images = req.files ? req.files.map(file => `/assets/img/${file.filename}`) : [];
+    const newProject = {
+      id: projects.length + 1,
+      slug: title.toLowerCase().replace(/ /g, '-'),
+      title,
+      description,
+      client,
+      date,
+      testimonial,
+      testimonialAuthor,
+      testimonialRole,
+      images: images.length > 0 ? images : ['/assets/img/default.jpg'],
+      thumbnail: images.length > 0 ? images[0] : '/assets/img/default.jpg',
+    };
+    projects.push(newProject);
+    saveProjects(projects);
+    res.json(newProject);
+  });
 
 // Update a project
 app.put('/api/projects/:id', authenticate, upload.array('images', 5), (req, res) => {
