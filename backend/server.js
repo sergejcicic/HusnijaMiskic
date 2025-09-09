@@ -27,7 +27,7 @@ app.get('/admin', (req, res) => res.sendFile(path.join(__dirname, 'public/admin.
 // Multer setup for image uploads
 const storage = multer.diskStorage({
     destination: (req, file, cb) => cb(null, path.join(__dirname, 'public/assets/img/')),
-    filename: (req, file, cb) => cb(null, Date.now() + '-' + file.originalname),
+    filename: (req, file, cb) => cb(null, file.originalname), // Removes timestamp
   });
   const upload = multer({ storage });
 
