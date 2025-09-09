@@ -115,7 +115,7 @@ app.put('/api/projects/:id', authenticate, upload.array('images', 5), (req, res)
   if (!project) return res.status(404).json({ error: 'Project not found' });
 
   const { title, description, client, date, testimonial, testimonialAuthor, testimonialRole } = req.body;
-  const images = req.files.length ? req.files.map(file => `/assets/img/prenove/${file.filename}`) : project.images;
+  const images = req.files.length ? req.files.map(file => `/assets/img/${file.filename}`) : project.images;
   Object.assign(project, {
     title, description, client, date, testimonial, testimonialAuthor, testimonialRole, images,
     thumbnail: images[0] || project.thumbnail,
