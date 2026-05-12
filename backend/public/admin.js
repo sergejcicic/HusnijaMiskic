@@ -48,19 +48,24 @@ function hideForm() {
 }
 
 async function editProject(id) {
-  const res = await fetch(`/api/projects`);
+  const res = await fetch('https://husnijamiskic-backend.onrender.com/api/projects');
   const projects = await res.json();
   const project = projects.find(p => p.id === id);
-  document.getElementById('project-id').value = project.id;
-  document.getElementById('title').value = project.title;
-  document.getElementById('description').value = project.description;
-  document.getElementById('client').value = project.client;
-  document.getElementById('date').value = project.date;
-  document.getElementById('testimonial').value = project.testimonial;
-  document.getElementById('testimonialAuthor').value = project.testimonialAuthor;
-  document.getElementById('testimonialRole').value = project.testimonialRole;
-  document.getElementById('form-title').textContent = 'Edit Project';
-  document.getElementById('project-form').style.display = 'block';
+  
+  if (project) {
+    document.getElementById('project-id').value = project.id;
+    document.getElementById('title').value = project.title;
+    document.getElementById('slug').value = project.slug || '';
+    document.getElementById('description').value = project.description;
+    document.getElementById('client').value = project.client;
+    document.getElementById('date').value = project.date;
+    document.getElementById('testimonial').value = project.testimonial || '';
+    document.getElementById('testimonialAuthor').value = project.testimonialAuthor || '';
+    document.getElementById('testimonialRole').value = project.testimonialRole || '';
+    
+    document.getElementById('form-title').textContent = 'Edit Project';
+    document.getElementById('project-form').style.display = 'block';
+  }
 }
 
 document.getElementById('form').addEventListener('submit', async (e) => {
