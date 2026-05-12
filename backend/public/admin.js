@@ -72,26 +72,32 @@ document.getElementById('form').addEventListener('submit', async (e) => {
   e.preventDefault();
   const id = document.getElementById('project-id').value;
   const formData = new FormData();
+  
   formData.append('title', document.getElementById('title').value);
+  formData.append('slug', document.getElementById('slug').value);        // ← Important
   formData.append('description', document.getElementById('description').value);
   formData.append('client', document.getElementById('client').value);
   formData.append('date', document.getElementById('date').value);
   formData.append('testimonial', document.getElementById('testimonial').value);
   formData.append('testimonialAuthor', document.getElementById('testimonialAuthor').value);
   formData.append('testimonialRole', document.getElementById('testimonialRole').value);
+
   const files = document.getElementById('images').files;
   for (let file of files) formData.append('images', file);
 
-  const url = id ? `/api/projects/${id}` : '/api/projects';
+  const url = id ? `https://husnijamiskic-backend.onrender.com/api/projects/${id}` : 'https://husnijamiskic-backend.onrender.com/api/projects';
   const method = id ? 'PUT' : 'POST';
+
   const res = await fetch(url, {
-    method,
+    method: method,
     headers: { 'Authorization': `Bearer ${token}` },
     body: formData,
   });
+
   if (res.ok) {
     loadProjects();
     hideForm();
+    alert('Project saved successfully!');
   } else {
     alert('Error saving project');
   }
