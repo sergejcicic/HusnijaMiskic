@@ -1,0 +1,13 @@
+RewriteEngine On
+
+# Redirect root to index.html
+RewriteRule ^$ index.html [L]
+
+# Serve project-details.html for clean project URLs (slugs)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([a-zA-Z0-9\-]+)$ project-details.html [L]
+
+# For any other .html files
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ $1.html [L]
