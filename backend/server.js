@@ -49,7 +49,14 @@ const getProjects = () => {
 
 // Save projects to JSON
 const saveProjects = (projects) => {
-  fs.writeFileSync(path.join(__dirname, 'data/projects.json'), JSON.stringify(projects, null, 2));
+  const filePath = path.join(__dirname, 'data/projects.json');
+  try {
+    fs.writeFileSync(filePath, JSON.stringify(projects, null, 2));
+    console.log('Projects saved successfully');
+  } catch (err) {
+    console.error('Error saving projects:', err);
+    throw err;
+  }
 };
 
 // Middleware to verify JWT
