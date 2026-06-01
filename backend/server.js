@@ -114,11 +114,10 @@ app.post('/api/projects', authenticate, upload.array('images', 5), (req, res) =>
   const { title, slug, description, client, date, testimonial, testimonialAuthor, testimonialRole } = req.body;
   
   const images = req.files
-    .filter(file => file.fieldname === 'images')
+    .filter(f => f.fieldname === 'images')
     .map(file => `/assets/img/${file.filename}`);
 
-  // Handle testimonial image
-  const testimonialImageFile = req.files.find(file => file.fieldname === 'testimonialImage');
+  const testimonialImageFile = req.files.find(f => f.fieldname === 'testimonialImage');
   const testimonialImage = testimonialImageFile 
     ? `/assets/img/testimonials/${testimonialImageFile.filename}` 
     : '';
@@ -133,7 +132,7 @@ app.post('/api/projects', authenticate, upload.array('images', 5), (req, res) =>
     testimonial,
     testimonialAuthor,
     testimonialRole,
-    testimonialImage,           // ← Added
+    testimonialImage,        // ← New
     images,
     thumbnail: images[0] || '/assets/img/default.jpg',
   };
@@ -154,13 +153,11 @@ app.put('/api/projects/:id', authenticate, upload.array('images', 5), (req, res)
   
   let images = project.images;
   if (req.files && req.files.some(f => f.fieldname === 'images')) {
-    images = req.files
-      .filter(file => file.fieldname === 'images')
+    images = req.files.filter(f => f.fieldname === 'images')
       .map(file => `/assets/img/${file.filename}`);
   }
 
-  // Handle testimonial image
-  const testimonialImageFile = req.files.find(file => file.fieldname === 'testimonialImage');
+  const testimonialImageFile = req.files.find(f => f.fieldname === 'testimonialImage');
   const testimonialImage = testimonialImageFile 
     ? `/assets/img/testimonials/${testimonialImageFile.filename}` 
     : project.testimonialImage;
@@ -174,7 +171,7 @@ app.put('/api/projects/:id', authenticate, upload.array('images', 5), (req, res)
     testimonial: testimonial !== undefined ? testimonial : project.testimonial,
     testimonialAuthor: testimonialAuthor !== undefined ? testimonialAuthor : project.testimonialAuthor,
     testimonialRole: testimonialRole !== undefined ? testimonialRole : project.testimonialRole,
-    testimonialImage,                    // ← Added
+    testimonialImage,
     images: images,
     thumbnail: images[0] || project.thumbnail,
   });
