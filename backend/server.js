@@ -29,10 +29,16 @@ app.get('/admin', (req, res) => res.sendFile(path.join(__dirname, 'public/admin.
 
 // Multer setup for image uploads
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, '../public/assets/img/'),
+  destination: (req, file, cb) => {
+    const dir = path.join(__dirname, '../public/assets/img');
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+    cb(null, dir);
+  },
   filename: (req, file, cb) => cb(null, Date.now() + '-' + file.originalname),
 });
-  const upload = multer({ storage });
+const upload = multer({ storage });
 
 // Load projects from JSON
 const getProjects = () => {
