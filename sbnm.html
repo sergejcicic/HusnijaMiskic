@@ -40,27 +40,46 @@
 </head>
 
 <script>
-    async function loadProject() {
-      const res = await fetch('https://husnijamiskic-backend.onrender.com/api/projects');
-      const projects = await res.json();
-      const slug = window.location.pathname.slice(1); // e.g., "sbnm"
-      const project = projects.find(p => p.slug === slug || p.slug === 'splosna-bolnisnica-novo-mesto');
-      if (project) {
-        document.getElementById('project-title').innerText = project.title;
-        document.getElementById('project-description').innerText = project.description;
-        document.getElementById('project-client').innerText = project.client;
-        document.getElementById('project-date').innerText = project.date;
-        document.getElementById('project-testimonial').innerText = project.testimonial;
-        document.getElementById('project-testimonial-author').innerText = project.testimonialAuthor;
-        document.getElementById('project-testimonial-role').innerText = project.testimonialRole;
-        const gallery = document.getElementById('project-gallery');
-        gallery.innerHTML = `<div class="swiper-wrapper align-items-center">${project.images.map(img => `<div class="swiper-slide"><img src="${img}" alt="${project.title}" class="img-fluid"></div>`).join('')}</div><div class="swiper-pagination"></div>`;
-      } else {
-        document.body.innerHTML = '<h1>Project not found</h1>';
-      }
-    }
-    window.onload = loadProject;
-    </script>
+async function loadProject() {
+  const res = await fetch('https://husnijamiskic-backend.onrender.com/api/projects');
+  const projects = await res.json();
+  
+  const slug = window.location.pathname.slice(1).replace('.html', '');
+  
+  const project = projects.find(p => 
+    p.slug === slug || 
+    p.slug === 'sbnm' || 
+    p.slug === 'splosna-bolnisnica-novo-mesto'
+  );
+
+  if (project) {
+    // Main title in breadcrumbs
+    document.getElementById('project-title').innerText = project.title;
+    
+    // Description
+    document.getElementById('project-description').innerText = project.description;
+    
+    // Client and Date
+    document.getElementById('project-client').innerText = project.client;
+    document.getElementById('project-date').innerText = project.date;
+    
+    // Testimonial
+    document.getElementById('project-testimonial').innerText = project.testimonial || '';
+    document.getElementById('project-testimonial-author').innerText = project.testimonialAuthor || '';
+    document.getElementById('project-testimonial-role').innerText = project.testimonialRole || '';
+
+    // Gallery / Images
+    const gallery = document.getElementById('project-gallery');
+    gallery.innerHTML = `<div class="swiper-wrapper align-items-center">${project.images.map(img => 
+      `<div class="swiper-slide"><img src="${img}" alt="${project.title}" class="img-fluid"></div>`
+    ).join('')}</div><div class="swiper-pagination"></div>`;
+
+  } else {
+    document.body.innerHTML = '<h1>Project not found</h1>';
+  }
+}
+window.onload = loadProject;
+</script>
 
 <body>
 

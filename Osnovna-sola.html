@@ -40,27 +40,36 @@
 </head>
 
 <script>
-  async function loadProject() {
-    const res = await fetch('https://husnijamiskic-backend.onrender.com/api/projects');
-    const projects = await res.json();
-    const slug = window.location.pathname.slice(1); // e.g., "osnovna-sola-ig"
-    const project = projects.find(p => p.slug === slug || p.slug === 'osnovna-sola-ig');
-    if (project) {
-      document.getElementById('project-title').innerText = project.title;
-      document.getElementById('project-description').innerText = project.description;
-      document.getElementById('project-client').innerText = project.client;
-      document.getElementById('project-date').innerText = project.date;
-      document.getElementById('project-testimonial').innerText = project.testimonial;
-      document.getElementById('project-testimonial-author').innerText = project.testimonialAuthor;
-      document.getElementById('project-testimonial-role').innerText = project.testimonialRole;
-      const gallery = document.getElementById('project-gallery');
-      gallery.innerHTML = `<div class="swiper-wrapper align-items-center">${project.images.map(img => `<div class="swiper-slide"><img src="${img}" alt="${project.title}" class="img-fluid"></div>`).join('')}</div><div class="swiper-pagination"></div>`;
-    } else {
-      document.body.innerHTML = '<h1>Project not found</h1>';
-    }
+async function loadProject() {
+  const res = await fetch('https://husnijamiskic-backend.onrender.com/api/projects');
+  const projects = await res.json();
+  
+  // Handle both possible slugs
+  let slug = window.location.pathname.slice(1).replace('.html', '');
+  
+  const project = projects.find(p => 
+    p.slug === slug || 
+    p.slug === 'osnovna-sola' || 
+    p.slug === 'Osnovna-sola'
+  );
+
+  if (project) {
+    document.getElementById('project-title').innerText = project.title;
+    document.getElementById('project-description').innerText = project.description;
+    document.getElementById('project-client').innerText = project.client;
+    document.getElementById('project-date').innerText = project.date;
+    document.getElementById('project-testimonial').innerText = project.testimonial;
+    document.getElementById('project-testimonial-author').innerText = project.testimonialAuthor;
+    document.getElementById('project-testimonial-role').innerText = project.testimonialRole;
+    
+    const gallery = document.getElementById('project-gallery');
+    gallery.innerHTML = `<div class="swiper-wrapper align-items-center">${project.images.map(img => `<div class="swiper-slide"><img src="${img}" alt="${project.title}" class="img-fluid"></div>`).join('')}</div><div class="swiper-pagination"></div>`;
+  } else {
+    document.body.innerHTML = '<h1>Project not found</h1>';
   }
-  window.onload = loadProject;
-  </script>
+}
+window.onload = loadProject;
+</script>
 
 <body>
 

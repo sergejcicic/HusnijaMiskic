@@ -26,9 +26,9 @@ app.get('/admin', (req, res) => res.sendFile(path.join(__dirname, 'public/admin.
 
 // Multer setup for image uploads
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => cb(null, path.join(__dirname, 'public/assets/img/')),
-    filename: (req, file, cb) => cb(null, file.originalname), // Removes timestamp
-  });
+  destination: (req, file, cb) => cb(null, '../public/assets/img/'),
+  filename: (req, file, cb) => cb(null, Date.now() + '-' + file.originalname),
+});
   const upload = multer({ storage });
 
 // Load projects from JSON
@@ -89,7 +89,7 @@ app.post('/api/projects', authenticate, upload.array('images', 5), (req, res) =>
   const projects = getProjects();
   const { title, slug, description, client, date, testimonial, testimonialAuthor, testimonialRole } = req.body;
   
-  const images = req.files.map(file => `/assets/img/prenove/${file.filename}`);
+  const images = req.files.map(file => `/assets/img/${file.filename}`);
   const newProject = {
     id: projects.length + 1,
     slug: slug || title.toLowerCase().replace(/ /g, '-'),   // Use manual slug or generate
