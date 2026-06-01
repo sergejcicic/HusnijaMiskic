@@ -27,20 +27,23 @@ app.use('/admin', express.static(path.join(__dirname, 'public'))); // Serve admi
 app.get('/', (req, res) => res.redirect('/admin')); // Redirect root to admin
 app.get('/admin', (req, res) => res.sendFile(path.join(__dirname, 'public/admin.html'))); // Explicitly serve admin.html
 
-// Multer setup for image uploads - simpler filenames
+// Multer setup - accept both main images and testimonial image
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const dir = path.join(__dirname, '../public/assets/img');
+    let dir;
+    if (file.fieldname === 'testimonialImage') {
+      dir = path.join(__dirname, '../public/assets/img/testimonials');
+    } else {
+      dir = path.join(__dirname, '../public/assets/img');
+    }
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true });
     }
     cb(null, dir);
   },
-  filename: (req, file, cb) => {
-    // Keep original filename without timestamp
-    cb(null, file.originalname);
-  }
+  filename: (req, file, cb) => cb(null, Date.now() + '-' + file.originalname),
 });
+
 const upload = multer({ storage });
 
 // Load projects from JSON
