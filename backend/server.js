@@ -51,11 +51,16 @@ const getProjects = () => {
 const saveProjects = (projects) => {
   const filePath = path.join(__dirname, 'data/projects.json');
   try {
+    // Make sure directory exists
+    const dir = path.dirname(filePath);
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
     fs.writeFileSync(filePath, JSON.stringify(projects, null, 2));
-    console.log('Projects saved successfully');
+    console.log('✅ Projects saved successfully to:', filePath);
   } catch (err) {
-    console.error('Error saving projects:', err);
-    throw err;
+    console.error('❌ Error saving projects:', err.message);
+    throw new Error('Failed to save projects: ' + err.message);
   }
 };
 
