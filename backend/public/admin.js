@@ -109,6 +109,12 @@ document.getElementById('form').addEventListener('submit', async (e) => {
     alert('Connection error - check console');
     console.error(err);
   }
+
+const testimonialImageFile = document.getElementById('testimonialImage').files[0];
+if (testimonialImageFile) {
+  formData.append('testimonialImage', testimonialImageFile);
+}
+
 });
 
 async function deleteProject(id) {

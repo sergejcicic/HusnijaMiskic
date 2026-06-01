@@ -113,10 +113,19 @@ app.post('/api/projects', authenticate, upload.array('images', 5), (req, res) =>
   const projects = getProjects();
   const { title, slug, description, client, date, testimonial, testimonialAuthor, testimonialRole } = req.body;
   
-  const images = req.files.map(file => `/assets/img/${file.filename}`);
+  const images = req.files
+    .filter(file => file.fieldname === 'images')
+    .map(file => `/assets/img/${file.filename}`);
+
+  // Handle testimonial image
+  const testimonialImageFile = req.files.find(file => file.fieldname === 'testimonialImage');
+  const testimonialImage = testimonialImageFile 
+    ? `/assets/img/testimonials/${testimonialImageFile.filename}` 
+    : '';
+
   const newProject = {
     id: projects.length + 1,
-    slug: slug || title.toLowerCase().replace(/ /g, '-'),   // Use manual slug or generate
+    slug: slug || title.toLowerCase().replace(/ /g, '-'),
     title,
     description,
     client,
@@ -124,6 +133,7 @@ app.post('/api/projects', authenticate, upload.array('images', 5), (req, res) =>
     testimonial,
     testimonialAuthor,
     testimonialRole,
+    testimonialImage,           // ← Added
     images,
     thumbnail: images[0] || '/assets/img/default.jpg',
   };
@@ -131,6 +141,7 @@ app.post('/api/projects', authenticate, upload.array('images', 5), (req, res) =>
   saveProjects(projects);
   res.json(newProject);
 });
+
 
 // Update a project
 app.put('/api/projects/:id', authenticate, upload.array('images', 5), (req, res) => {
@@ -141,10 +152,18 @@ app.put('/api/projects/:id', authenticate, upload.array('images', 5), (req, res)
 
   const { title, slug, description, client, date, testimonial, testimonialAuthor, testimonialRole } = req.body;
   
-  let images = project.images; // Keep old images by default
-  if (req.files && req.files.length > 0) {
-    images = req.files.map(file => `/assets/img/${file.filename}`);
+  let images = project.images;
+  if (req.files && req.files.some(f => f.fieldname === 'images')) {
+    images = req.files
+      .filter(file => file.fieldname === 'images')
+      .map(file => `/assets/img/${file.filename}`);
   }
+
+  // Handle testimonial image
+  const testimonialImageFile = req.files.find(file => file.fieldname === 'testimonialImage');
+  const testimonialImage = testimonialImageFile 
+    ? `/assets/img/testimonials/${testimonialImageFile.filename}` 
+    : project.testimonialImage;
 
   Object.assign(project, {
     title: title || project.title,
@@ -152,9 +171,10 @@ app.put('/api/projects/:id', authenticate, upload.array('images', 5), (req, res)
     description: description || project.description,
     client: client || project.client,
     date: date || project.date,
-    testimonial: testimonial || project.testimonial,
-    testimonialAuthor: testimonialAuthor || project.testimonialAuthor,
-    testimonialRole: testimonialRole || project.testimonialRole,
+    testimonial: testimonial !== undefined ? testimonial : project.testimonial,
+    testimonialAuthor: testimonialAuthor !== undefined ? testimonialAuthor : project.testimonialAuthor,
+    testimonialRole: testimonialRole !== undefined ? testimonialRole : project.testimonialRole,
+    testimonialImage,                    // ← Added
     images: images,
     thumbnail: images[0] || project.thumbnail,
   });
