@@ -86,26 +86,27 @@ app.get('/api/projects', (req, res) => {
 
 // Add a project
 app.post('/api/projects', authenticate, upload.array('images', 5), (req, res) => {
-    const projects = getProjects();
-    const { title, description, client, date, testimonial, testimonialAuthor, testimonialRole } = req.body;
-    const images = req.files ? req.files.map(file => `/assets/img/${file.filename}`) : [];
-    const newProject = {
-      id: projects.length + 1,
-      slug: title.toLowerCase().replace(/ /g, '-'),
-      title,
-      description,
-      client,
-      date,
-      testimonial,
-      testimonialAuthor,
-      testimonialRole,
-      images: images.length > 0 ? images : ['/assets/img/default.jpg'],
-      thumbnail: images.length > 0 ? images[0] : '/assets/img/default.jpg',
-    };
-    projects.push(newProject);
-    saveProjects(projects);
-    res.json(newProject);
-  });
+  const projects = getProjects();
+  const { title, slug, description, client, date, testimonial, testimonialAuthor, testimonialRole } = req.body;
+  
+  const images = req.files.map(file => `/assets/img/prenove/${file.filename}`);
+  const newProject = {
+    id: projects.length + 1,
+    slug: slug || title.toLowerCase().replace(/ /g, '-'),   // Use manual slug or generate
+    title,
+    description,
+    client,
+    date,
+    testimonial,
+    testimonialAuthor,
+    testimonialRole,
+    images,
+    thumbnail: images[0] || '/assets/img/default.jpg',
+  };
+  projects.push(newProject);
+  saveProjects(projects);
+  res.json(newProject);
+});
 
 // Update a project
 app.put('/api/projects/:id', authenticate, upload.array('images', 5), (req, res) => {
@@ -114,13 +115,22 @@ app.put('/api/projects/:id', authenticate, upload.array('images', 5), (req, res)
   const project = projects.find(p => p.id === id);
   if (!project) return res.status(404).json({ error: 'Project not found' });
 
-  const { title, description, client, date, testimonial, testimonialAuthor, testimonialRole } = req.body;
-  const images = req.files.length ? req.files.map(file => `/assets/img/${file.filename}`) : project.images;
+  const { title, slug, description, client, date, testimonial, testimonialAuthor, testimonialRole } = req.body;
+  const images = req.files.length ? req.files.map(file => `/assets/img/prenove/${file.filename}`) : project.images;
+
   Object.assign(project, {
-    title, description, client, date, testimonial, testimonialAuthor, testimonialRole, images,
+    title,
+    slug: slug || project.slug || title.toLowerCase().replace(/ /g, '-'),
+    description,
+    client,
+    date,
+    testimonial,
+    testimonialAuthor,
+    testimonialRole,
+    images,
     thumbnail: images[0] || project.thumbnail,
-    slug: title.toLowerCase().replace(/ /g, '-'),
   });
+
   saveProjects(projects);
   res.json(project);
 });
