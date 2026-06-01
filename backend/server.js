@@ -10,6 +10,9 @@ const app = express();
 const PORT = 3000;
 const SECRET_KEY = 'your-secret-key'; // Change this in production!
 
+console.log('Server starting...');
+console.log('Current directory:', __dirname);
+
 //CORS middleware 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'https://sergejc.iti.si');
@@ -47,20 +50,20 @@ const getProjects = () => {
     }
   };
 
-// Save projects to JSON
+// Save projects to JSON - with better error handling
 const saveProjects = (projects) => {
   const filePath = path.join(__dirname, 'data/projects.json');
   try {
-    // Make sure directory exists
     const dir = path.dirname(filePath);
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true });
     }
     fs.writeFileSync(filePath, JSON.stringify(projects, null, 2));
-    console.log('✅ Projects saved successfully to:', filePath);
+    console.log('✅ Successfully saved projects to:', filePath);
   } catch (err) {
-    console.error('❌ Error saving projects:', err.message);
-    throw new Error('Failed to save projects: ' + err.message);
+    console.error('❌ FAILED TO SAVE projects.json:', err.message);
+    console.error('Full error:', err);
+    throw new Error('Failed to save file: ' + err.message);
   }
 };
 
