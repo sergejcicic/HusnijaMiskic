@@ -27,7 +27,7 @@ app.use('/admin', express.static(path.join(__dirname, 'public'))); // Serve admi
 app.get('/', (req, res) => res.redirect('/admin')); // Redirect root to admin
 app.get('/admin', (req, res) => res.sendFile(path.join(__dirname, 'public/admin.html'))); // Explicitly serve admin.html
 
-// Multer setup for image uploads
+// Multer setup for image uploads - simpler filenames
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const dir = path.join(__dirname, '../public/assets/img');
@@ -36,7 +36,10 @@ const storage = multer.diskStorage({
     }
     cb(null, dir);
   },
-  filename: (req, file, cb) => cb(null, Date.now() + '-' + file.originalname),
+  filename: (req, file, cb) => {
+    // Keep original filename without timestamp
+    cb(null, file.originalname);
+  }
 });
 const upload = multer({ storage });
 
