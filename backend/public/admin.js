@@ -41,6 +41,15 @@ function showAddForm() {
   document.getElementById('form').reset();
   document.getElementById('project-id').value = '';
   document.getElementById('project-form').style.display = 'block';
+  
+  // Auto generate slug when title is typed
+  const titleInput = document.getElementById('title');
+  const slugInput = document.getElementById('slug');
+  
+  titleInput.addEventListener('input', () => {
+    let slug = titleInput.value.toLowerCase().replace(/ /g, '-').replace(/[^a-z0-9-]/g, '');
+    slugInput.value = slug;
+  });
 }
 
 function hideForm() {
@@ -82,13 +91,15 @@ document.getElementById('form').addEventListener('submit', async (e) => {
   formData.append('testimonialAuthor', document.getElementById('testimonialAuthor').value || '');
   formData.append('testimonialRole', document.getElementById('testimonialRole').value || '');
 
-  const testimonialImageFile = document.getElementById('testimonialImage').files[0];
-  if (testimonialImageFile) {
-  formData.append('testimonialImage', testimonialImageFile);
-}
-
+  // Main images
   const files = document.getElementById('images').files;
   for (let file of files) formData.append('images', file);
+
+  // Testimonial image
+  const testimonialImageFile = document.getElementById('testimonialImage').files[0];
+  if (testimonialImageFile) {
+    formData.append('testimonialImage', testimonialImageFile);
+  }
 
   const url = id ? `https://husnijamiskic-backend.onrender.com/api/projects/${id}` : 'https://husnijamiskic-backend.onrender.com/api/projects';
   const method = id ? 'PUT' : 'POST';
@@ -100,18 +111,16 @@ document.getElementById('form').addEventListener('submit', async (e) => {
       body: formData,
     });
 
-    const data = await res.text();   // Changed to text to see raw error
-
     if (res.ok) {
       loadProjects();
       hideForm();
       alert('Project saved successfully!');
     } else {
-      alert('Server Error: ' + data);
-      console.error('Server response:', data);
+      const errorText = await res.text();
+      alert('Error saving: ' + errorText);
     }
   } catch (err) {
-    alert('Connection error - check console');
+    alert('Connection error');
     console.error(err);
   }
 
