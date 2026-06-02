@@ -27,26 +27,24 @@ app.use('/admin', express.static(path.join(__dirname, 'public'))); // Serve admi
 app.get('/', (req, res) => res.redirect('/admin')); // Redirect root to admin
 app.get('/admin', (req, res) => res.sendFile(path.join(__dirname, 'public/admin.html'))); // Explicitly serve admin.html
 
-// Multer setup - accept both main images and testimonial image + keep original filename
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    let dir;
-    if (file.fieldname === 'testimonialImage') {
-      dir = path.join(__dirname, '../public/assets/img/testimonials');
-    } else {
-      dir = path.join(__dirname, '../public/assets/img');
+// Multer setup - support both main images and testimonial image
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: (req, file, cb) => {
+      let dir = path.join(__dirname, '../public/assets/img');
+      if (file.fieldname === 'testimonialImage') {
+        dir = path.join(__dirname, '../public/assets/img/testimonials');
+      }
+      if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
+      }
+      cb(null, dir);
+    },
+    filename: (req, file, cb) => {
+      cb(null, file.originalname);   // No timestamp
     }
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
-    }
-    cb(null, dir);
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.originalname);        // ← No timestamp
-  }
+  })
 });
-
-const upload = multer({ storage });
 
 // Load projects from JSON
 const getProjects = () => {
@@ -114,7 +112,10 @@ app.get('/api/projects', (req, res) => {
 });
 
 // Add a project
-app.post('/api/projects', authenticate, upload.array('images', 5), (req, res) => {
+app.post('/api/projects', authenticate, upload.fields([
+  { name: 'images', maxCount: 5 },
+  { name: 'testimonialImage', maxCount: 1 }
+]), (req, res) => {
   const projects = getProjects();
   const { title, slug, description, client, date, testimonial, testimonialAuthor, testimonialRole } = req.body;
   
@@ -148,7 +149,10 @@ app.post('/api/projects', authenticate, upload.array('images', 5), (req, res) =>
 
 
 // Update a project
-app.put('/api/projects/:id', authenticate, upload.array('images', 5), (req, res) => {
+app.put('/api/projects/:id', authenticate, upload.fields([
+  { name: 'images', maxCount: 5 },
+  { name: 'testimonialImage', maxCount: 1 }
+]), (req, res) => {
   const projects = getProjects();
   const id = parseInt(req.params.id);
   const project = projects.find(p => p.id === id);
